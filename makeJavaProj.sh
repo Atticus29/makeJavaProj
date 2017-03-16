@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # User interface
 
@@ -15,11 +15,9 @@ echo "UpperCamelCase alphabetic ONLY! Will also make appropriate Test.java"
 read className
 echo "I got $className"
 echo "Are those both correct? Hit [N] to exit or any other key to continue."
-read yesOrNo
-
 read -n 1 yesOrNo
 
-if [ "$yesOrNo" = "n" -o "N" ]; then
+if [ "$yesOrNo" == "n" -o "$yesOrNo" == "N" ]; then
     echo
     echo "EXITING, TRY AGAIN"
     exit
@@ -29,63 +27,26 @@ fi
 
 
 # The fun stuff
-touch -p ~/Desktop/$projectName/src/main/java/App.java
+mkdir -p ~/Desktop/$projectName/src/main/java
+touch ~/Desktop/$projectName/src/main/java/App.java
 printf "public class App{\n\tpublic static void main(String[] args) {\n\t}\n}"> ~/Desktop/$projectName/src/main/java/App.java
 touch ~/Desktop/$projectName/src/main/java/$className.java
 printf "import java.util.ArrayList;\nimport java.util.List;\ninport java.util.Arrays;\n\npublic class $className{\n\n}" > ~/Desktop/$projectName/src/main/java/$className.java
-touch -p ~/Desktop/$projectName/src/test/java/$classNameTest.java
-printf "import org.junit.*;\nimport static org.junit.Assert.*;" > ~/Desktop/$projectName/src/test/java/$classNameTest.java
-printf "\n\npublic class $classNameTest {\n\n}" >> ~/Desktop/$projectName/src/test/java/$classNameTest.java
+mkdir -p ~/Desktop/$projectName/src/test/java
+touch ~/Desktop/$projectName/src/test/java/"$className"Test.java
+printf "import org.junit.*;\nimport static org.junit.Assert.*;\n\npublic class $classNameTest {\n\n}" > ~/Desktop/$projectName/src/test/java/"$className"Test.java
+# printf "\n\npublic class $classNameTest {\n\n}" >> ~/Desktop/$projectName/src/test/java/$classNameTest.java
 touch ~/Desktop/$projectName/build.gradle
 printf "apply plugin: 'java'\napply plugin: 'application'\n\narchivesBaseName ="\""$projectName"\""\nversion = '1.0'\nmainClassName ="\""App"\"" \n\nrepositories {\n\tmavenCentral()\n}\n\ndependencies {\n\ttestCompile group: 'junit', name: 'junit', version: '4.+'\n}" > ~/Desktop/$projectName/build.gradle
 touch ~/Desktop/$projectName/README.md
 # add boilerplate readme?
 
+touch ~/Desktop/$projectName/.gitignore
+
 # Add gitignore contents
-cat > ~/Desktop/$projectName/.gitignore <<EOF
+printf "# Compiled source #\n############\n*.com\n*.class\n*.dll\n*.exe\n*.o\n*.so\n\n# Packages #\n############\n*.7z\n*.dmg\n*.gz\n*.iso\n*.jar\n*.rar\n*.tar\n*.zip\n\n# Logs and databases #\n############\n*.log\n\n# OS generated files #\n############\n.DS_Store\n.DS_Store?\n._*\n.Spotlight-V100\n.Trashes\nehthumbs.db\nThumbs.db\n\n# Java and Gradle #\n############\nbuild/\n.gradle/" > ~/Desktop/$projectName/.gitignore
 
-# Compiled source #
-############
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-
-# Packages #
-############
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
-
-# Logs and databases #
-############
-*.log
-
-# OS generated files #
-############
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Java and Gradle #
-############
-build/
-.gradle/
-
-EOF
-
-cd ~/Desktop/$projectName/
+cd ~/Desktop/$projectName
 #Open new terminal tab
 function tab() {
   osascript 2>/dev/null <<EOF
