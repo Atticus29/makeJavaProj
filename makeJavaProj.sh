@@ -37,7 +37,7 @@ mkdir -p ~/Desktop/$projectName/src/test/java
 touch ~/Desktop/$projectName/src/test/java/"$className"Test.java
 printf "import org.junit.*;\nimport static org.junit.Assert.*;\n\npublic class "$className"Test {\n\n}" > ~/Desktop/$projectName/src/test/java/"$className"Test.java
 touch ~/Desktop/$projectName/build.gradle
-printf "apply plugin: 'java'\napply plugin: 'application'\n\narchivesBaseName ="\""$projectName"\""\nversion = '1.0'\nmainClassName ="\""App"\"" \n\nrepositories {\n\tmavenCentral()\n}\n\ndependencies {\n\ttestCompile group: 'junit', name: 'junit', version: '4.+'\n}" > ~/Desktop/$projectName/build.gradle
+printf "apply plugin: 'java'\napply plugin: 'application'\n\narchivesBaseName =\"$projectName\"\nversion = '1.0'\nmainClassName =\"App\" \n\nrepositories {\n\tmavenCentral()\n}\n\ndependencies {\n\ttestCompile group: 'junit', name: 'junit', version: '4.+'\n}" > ~/Desktop/$projectName/build.gradle
 touch ~/Desktop/$projectName/README.md
 # add boilerplate readme?
 
